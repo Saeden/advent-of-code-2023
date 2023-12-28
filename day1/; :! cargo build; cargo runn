@@ -2,12 +2,12 @@ use std::fs::File;
 use std::io::{BufReader, BufRead};
 
 fn main() {
-    day1_1();
+    //day1_1();
     day1_2();
 }
 
 fn day1_2() {
-    let file = File::open("input.txt").expect("Failed to open file");
+    let file = File::open("test2.txt").expect("Failed to open file");
     let reader = BufReader::new(file);
 
     let mut output: Vec<usize> = Vec::new();
@@ -17,28 +17,23 @@ fn day1_2() {
         let mut digits: Vec<usize> = Vec::new();
         let mut sub_string: String = String::new();
 
-        //println!("current line is: {}", line);
         for character in line.chars() {
-            //println!("current char is: {:?}", character);
             if character.is_digit(10){
                 digits.push((character as usize) - ('0' as usize));
-                //sub_string = "".to_string();
             } else if character.is_alphabetic() {
                 sub_string = sub_string + &String::from(character);
-                //println!("sub string before check: {}", sub_string);
+                println!("sub string before check: {}", sub_string);
                 if check_str(&mut sub_string){
-                    let found_digit = convert_to_digit(&mut sub_string);
-                    digits.push(found_digit);
-                    //sub_string = sub_string[1..].to_string();//"".to_string();                
+                    let digit = convert_to_digit(&mut sub_string);
+                    digits.push(digit);
+                    sub_string = "".to_string();
                 }
-                //println!("sub string after check: {}", sub_string);
+                println!("sub string after check: {}", sub_string);
             }
         }
         let mut digit = digits[0] * 10;
         digit = digit + digits[digits.len()-1];
         output.push(digit);
-        //println!("all digits this line: {:?}", digits);
-        //println!("added digit: {}", digit);
     }
 
     let num: usize = output.iter().sum();
@@ -52,33 +47,33 @@ fn check_str(sub_string: &mut String) -> bool{
         if sub_string.len() > number.len() {
             continue;
         } else if *sub_string == number {
-            //println!("str check succes: str({:?}) == num({:?})", sub_string, number);
+            println!("str check succes: str({:?}) == num({:?})", sub_string, number);
             return true;
         } 
         // println!("number == {:?}", number);
         let num_sub_str = &number.to_string()[..sub_string.len()];
-        //println!("num sub str == to len sub_str: {:?} == {:?}", num_sub_str, sub_string);
+        println!("num sub str == to len sub_str: {:?} == {:?}", num_sub_str, sub_string);
         if  *num_sub_str == *sub_string{
-            //println!("str is sub str");
+            println!("str is sub str");
             return false;
         }
     }
-    //println!("str is not a sub str");
-    *sub_string = sub_string[1..].to_string();
+    println!("str is not a sub str");
+    *sub_string = "".to_string();
     return false
 }
 
-fn convert_to_digit(sub_string: &mut String) -> usize{
+fn convert_to_digit(sub_string: &String) -> usize{
     match sub_string.as_str() {
-       "one"   => {*sub_string = String::from("e");return 1},
-       "two"   => {*sub_string = String::from("o");return 2},
-       "three" => {*sub_string = String::from("e");return 3},
-       "four"  => {*sub_string = String::from(""); return 4},
-       "five"  => {*sub_string = String::from("e");return 5},
-       "six"   => {*sub_string = String::from("");return 6},
-       "seven" => {*sub_string = String::from("n");return 7},
-       "eight" => {*sub_string = String::from("t");return 8},
-       "nine"  => {*sub_string = String::from("e");return 9},
+       "one"   => return 1,
+       "two"   => return 2,
+       "three" => return 3,
+       "four"  => return 4,
+       "five"  => return 5,
+       "six"   => return 6,
+       "seven" => return 7,
+       "eight" => return 8,
+       "nine"  => return 9,
         _      => panic!("Something is triggering as a digit: {}", sub_string),
     }
 }
