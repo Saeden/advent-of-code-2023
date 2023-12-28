@@ -17,28 +17,20 @@ fn day1_2() {
         let mut digits: Vec<usize> = Vec::new();
         let mut sub_string: String = String::new();
 
-        //println!("current line is: {}", line);
         for character in line.chars() {
-            //println!("current char is: {:?}", character);
             if character.is_digit(10){
                 digits.push((character as usize) - ('0' as usize));
-                //sub_string = "".to_string();
             } else if character.is_alphabetic() {
                 sub_string = sub_string + &String::from(character);
-                //println!("sub string before check: {}", sub_string);
                 if check_str(&mut sub_string){
                     let found_digit = convert_to_digit(&mut sub_string);
                     digits.push(found_digit);
-                    //sub_string = sub_string[1..].to_string();//"".to_string();                
                 }
-                //println!("sub string after check: {}", sub_string);
             }
         }
         let mut digit = digits[0] * 10;
         digit = digit + digits[digits.len()-1];
         output.push(digit);
-        //println!("all digits this line: {:?}", digits);
-        //println!("added digit: {}", digit);
     }
 
     let num: usize = output.iter().sum();
@@ -52,18 +44,11 @@ fn check_str(sub_string: &mut String) -> bool{
         if sub_string.len() > number.len() {
             continue;
         } else if *sub_string == number {
-            //println!("str check succes: str({:?}) == num({:?})", sub_string, number);
             return true;
-        } 
-        // println!("number == {:?}", number);
-        let num_sub_str = &number.to_string()[..sub_string.len()];
-        //println!("num sub str == to len sub_str: {:?} == {:?}", num_sub_str, sub_string);
-        if  *num_sub_str == *sub_string{
-            //println!("str is sub str");
+        } else if  number.to_string()[..sub_string.len()] == *sub_string{
             return false;
         }
     }
-    //println!("str is not a sub str");
     *sub_string = sub_string[1..].to_string();
     return false
 }
