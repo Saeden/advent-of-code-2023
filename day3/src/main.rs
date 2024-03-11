@@ -1,17 +1,16 @@
 use std::fs::File;
 use std::io::{BufReader, BufRead};
+use utils::line_iterator;
 
 fn main() {
     day3_1();
 }
 
 fn day3_1() {
-    let file = File::open("test.txt").expect("Failed to open file");
-    let reader = BufReader::new(file);
-
     let mut output: usize = 0;
 
-    for line in reader.lines() {
+    for line in line_iterator("test.txt") {
+        
     }
     println!("\nOutput 1: {}", output)
 }
