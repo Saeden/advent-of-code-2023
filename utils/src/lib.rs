@@ -1,15 +1,15 @@
 use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::io::{BufRead, BufReader};
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
-pub fn line_iterator(_path: &str) -> std::io::Lines<BufReader<File>>{
+pub fn line_iterator(_path: &str) -> std::io::Lines<BufReader<File>> {
     let file = File::open("test.txt").expect("Failed to open file");
     let reader: BufReader<File> = BufReader::new(file);
 
-    return reader.lines()
+    reader.lines()
 }
 
 #[cfg(test)]
