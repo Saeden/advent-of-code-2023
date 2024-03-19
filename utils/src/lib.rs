@@ -5,8 +5,8 @@ pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
-pub fn line_iterator(_path: &str) -> std::io::Lines<BufReader<File>> {
-    let file = File::open("test.txt").expect("Failed to open file");
+pub fn line_iterator(path: &str) -> std::io::Lines<BufReader<File>> {
+    let file = File::open(path).expect("Failed to open file");
     let reader: BufReader<File> = BufReader::new(file);
 
     reader.lines()
